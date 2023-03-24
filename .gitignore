@@ -2,3 +2,5 @@ Data/
 /.DS_Store
 *.csv
 craig/
+*__pycache__*
+*.pyc
