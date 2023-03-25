@@ -1,7 +1,7 @@
 import pandas as pd
 
 def mri_sdp(all_stress_subkey) -> pd.DataFrame:
-    mri_sdp = pd.read_csv("/home/bruceq/ABCD/Research/Data/sMRI/abcd_mrisdp10201.txt", delimiter='\t', skiprows=(1,1))
+    mri_sdp = pd.read_csv("Data/sMRI/abcd_mrisdp10201.txt", delimiter='\t', skiprows=(1,1))
     mri_sdp = mri_sdp.loc[:, "subjectkey":"mrisdp_151"]
     mri_sdp = mri_sdp.loc[:, "subjectkey":"mrisdp_151"].drop(["src_subject_id"], axis=1)
     mri_sdp = pd.get_dummies(mri_sdp, columns=['sex'])
@@ -22,5 +22,5 @@ def mri_sdp(all_stress_subkey) -> pd.DataFrame:
     mri_sdp_2 = mri_sdp_2.fillna(mri_sdp_mean_2)
     mri_sdp_2 = mri_sdp_2.drop(['interview_date'], axis=1)
     mri_sdp_2 = mri_sdp_2.set_index('subjectkey')
-    
+
     return mri_sdp_2

@@ -42,10 +42,12 @@ def stress() -> pd.DataFrame:
     stress_data = pd.DataFrame(imp_mean.fit_transform(stress_data.drop(["subjectkey"], axis=1)).round(decimals=0), columns=temp_cols)
     stress_data.insert(0, "subjectkey", temp_sub_keys)
 
+    # Calculate total stress score
     for i in range(0, 6):
         stress_data['total_stress_score_%d' % (i+1)] = stress_data['pstr_unable_control_cv_%d' % (i+1)] + np.abs(stress_data['pstr_confidence_p_cv_%d' % (i+1)]-4) 
         + np.abs(stress_data['pstr_way_p_cv_%d' % (i+1)]-4) + stress_data['pstr_overcome_p_cv_%d' % (i+1)]
         
+    # Keep total score columns
     stress_data = stress_data[["subjectkey", 'total_stress_score_1', 'total_stress_score_2', 'total_stress_score_3',
                                 'total_stress_score_4', 'total_stress_score_5', 'total_stress_score_6']]
     return stress_data
@@ -107,4 +109,4 @@ def stress_cluster(stress_data:pd.DataFrame, cluster_id:int, num_centers=15) -> 
     high_stress_subkey = overall_stress_extreme
     low_stress_subkey = overall_low_stress
 
-    return center_key.tolist(), [all_stress_subkey, high_stress_subkey, low_stress_subkey]
+    return [all_stress_subkey, high_stress_subkey, low_stress_subkey]
